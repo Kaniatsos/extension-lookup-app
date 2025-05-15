@@ -1,0 +1,21 @@
+
+import pandas as pd
+import streamlit as st
+
+# Load the Excel file
+df_lookup = pd.read_excel('CISCO PHONE EXTENSIONS.xlsx', sheet_name='Lookup', engine='openpyxl')
+
+# App title
+st.title('📞 Phone Extension Lookup')
+
+# Input field
+name = st.text_input('Enter a name to find their extension:')
+
+# Search logic
+if name:
+    result = df_lookup[df_lookup['Name'].str.contains(name, case=False, na=False)]
+    if not result.empty:
+        st.write('🔍 Results:')
+        st.dataframe(result)
+    else:
+        st.warning('No matching extension found.')
